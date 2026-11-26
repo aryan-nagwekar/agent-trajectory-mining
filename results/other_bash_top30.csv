@@ -1,0 +1,84 @@
+raw_command,count
+C-c,208
+exit_cost,83
+q,43
+,25
+sleep 5 && cat output.log,8
+y,6
+"cd /testbed && echo ""q"" | python -m pytest test_skip_inside2.py --pdb -s",5
+"cd /workspace/pytest-dev__pytest__7.2 && echo ""q"" | python -m pytest --pdb test_teardown_only.py 2>&1 | grep ""PYTEST_DEBUG""",5
+"cd /testbed && echo ""q"" | python -m pytest test_repro.py --pdb",4
+"echo ""Searching for links:"" && grep 'docs.python.org' html/index.html",4
+C-d,3
+"cd /testbed && echo ""q"" | python -m pytest test_repro_skip_class.py --pdb",3
+"file=django/core/management/commands/runserver.py && sed -i ""/self.stdout.write(\""Performing system checks/ i\        if not options.get('skip_checks'):"" $file && sed -i ""/self.stdout.write(\""Performing system checks/,+4 s/^/    /"" $file",3
+"for f in requests/__init__.py build/lib/requests/__init__.py; do sed -i '/def _eval_code():/ { s/def _eval_code():/outer_frame = sys._getframe(1)\n                def _eval_code():/ }' ""$f"" && sed -i '/frame = sys._getframe(1)/d' ""$f""; done",3
+pkill -f runserver,3
+sleep 3 && curl -iX HEAD http://127.0.0.1:8000/,3
+"sudo -u postgres psql test_db -c ""DROP TABLE IF EXISTS \""Activity_BlackListed\"";"" && python /workspace/reproduce.py",3
+"sudo -u postgres psql test_db -c ""SELECT * FROM \""Activity_BlackListed\"";""",3
+"(cat <<'EOF' > fix_script.py
+import re
+import numpy as np
+import textwrap
+
+with open('xarray/core/rolling.py', 'r') as f:
+    content = f.read()
+
+replacement_code_raw = r""""""
+def __iter__(self) -> Iterator[tuple[RollingKey, DataArray]]:
+    if self.ndim > 1:
+        raise ValueError(""__iter__ is only supported for 1d-rolling"")
+
+    window_size = self.window[0]
+    center = self.center[0]
+    dim = self.dim[0]
+    labels = self.window_labels
+
+    if center:
+        offset = (window_size - 1) // 2
+",2
+"(cat <<'EOF' > replacement.txt
+    def __iter__(self) -> Iterator[tuple[RollingKey, DataArray]]:
+        if self.ndim > 1:
+            raise ValueError(""__iter__ is only supported for 1d-rolling"")
+
+        window_size = self.window[0]
+        center = self.center[0]
+        dim = self.dim[0]
+        labels = self.window_labels
+
+        if center:
+            offset = (window_size - 1) // 2
+            starts = np.arange(len(labels)) - offset
+            stops = starts + window_size
+        else:",2
+"(cat <<'PATCH' >/tmp/min.patch
+--- django/__init__.py
++++ django/__init__.py
+@@
+-from django.utils.version import get_version
++# patched test
+ from django.utils.version import get_version
+PATCH
+) && patch -p0 --dry-run < /tmp/min.patch",2
+1.0,2
+OpenHands,2
+"applypatch << 'PATCH'
+*** Begin Patch
+*** Update File: sphinx/domains/python.py
+@@
+-        typ = self.options.get('type')
+-        if typ:
+-            if getattr(self.env, 'temp_data', {}).get('autodoc:module'):
+-                annotations = _parse_annotation(typ, self.env)
+-                signode += addnodes.desc_annotation(typ, '', nodes.Text(': '), *annotations)
+-            else:
+-                signode += addnodes.desc_annotation(typ, ': ' + typ)
++        typ = self.options.get('type')",2
+"cd /testbed && echo ""q"" | python -m pytest debug_test.py -s --pdb",2
+"cd /testbed && echo ""q"" | python -m pytest test_failing.py --pdb -s",2
+"cd /testbed && echo ""q"" | python -m pytest test_skipif.py --pdb",2
+"cd /workspace/sphinx-doc__sphinx__3.1 && curl -s http://www.sphinx-doc.org/en/master/devguide.html | grep -A 10 ""Running the tests""",2
+"cd /workspace/sphinx-doc__sphinx__3.2 && curl -s http://www.sphinx-doc.org/en/master/internals/contributing.html | grep -A 20 ""Running the tests""",2
+cd /workspace/sphinx-doc__sphinx__3.5/test_viewcode_epub && unzip -l _build/epub/Python.epub,2

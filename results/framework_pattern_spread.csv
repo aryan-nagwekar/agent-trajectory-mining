@@ -1,0 +1,46 @@
+pattern,n_frameworks,frameworks,direction_agrees
+create → edit → run_script → create → run_script,1,SWE-agent,True
+create → edit → run_script → run_test,1,SWE-agent,True
+create → edit → run_test,1,SWE-agent,True
+create → run_script → edit → run_script → run_test,1,SWE-agent,True
+create → run_script → edit → run_test,1,SWE-agent,True
+create → run_script → run_script → run_script,1,SWE-agent,True
+create → run_script → run_script → submit,1,SWE-agent,True
+create → run_script → submit,1,SWE-agent,True
+create → run_script → think → submit,1,SWE-agent,True
+create → submit,1,SWE-agent,True
+edit → edit,1,OpenHands,True
+edit → edit → run_script:error,1,OpenHands,True
+edit → edit×2,1,OpenHands,True
+edit → run_script → create,1,SWE-agent,True
+edit → run_script → create → run_script,1,SWE-agent,True
+edit → run_script → run_test,1,SWE-agent,True
+edit → run_script:error → edit,1,OpenHands,True
+edit → run_script:error → edit×2,1,OpenHands,True
+edit → run_script:error → run_script:error,1,OpenHands,True
+edit → run_script:ok → edit → edit,1,OpenHands,True
+edit → run_test,1,SWE-agent,True
+edit → run_test → create,1,SWE-agent,True
+edit → run_test → create → run_script,1,SWE-agent,True
+edit → run_test → run_script,1,SWE-agent,True
+edit → submit,1,SWE-agent,True
+edit:ok → edit:ok → edit:ok,1,mini-SWE-agent,True
+edit×2 → edit,1,OpenHands,True
+run_script → edit → run_script → create → run_script,1,SWE-agent,True
+run_script → edit → run_script → run_test,1,SWE-agent,True
+run_script → edit → run_test,1,SWE-agent,True
+run_script → submit,1,SWE-agent,True
+run_script → think → submit,1,SWE-agent,True
+run_script:error → edit → run_script:error → run_script:error,1,OpenHands,True
+run_script:error → edit×2 → edit,1,OpenHands,True
+run_script:error → run_script:error → edit×2,1,OpenHands,True
+run_script:ok → edit → edit,1,OpenHands,True
+run_script:ok → edit → edit → run_script:ok → run_script:ok,1,OpenHands,True
+submit,1,SWE-agent,True
+submit → edit,1,SWE-agent,True
+submit → run_script,1,SWE-agent,True
+think → submit,1,SWE-agent,True
+think → submit → run_script,1,SWE-agent,True
+think → submit → run_script → edit,1,SWE-agent,True
+view:ok → edit:ok → edit:ok → edit:ok,1,mini-SWE-agent,True
+view×3+ → run_script → edit → run_script → create,1,SWE-agent,True

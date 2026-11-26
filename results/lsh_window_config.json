@@ -1,0 +1,15 @@
+{
+  "window_count": 23456,
+  "source_runs": 4965,
+  "width": 20,
+  "stride": 5,
+  "k": 3,
+  "threshold": 0.4,
+  "bands": 42,
+  "rows": 3,
+  "unavailable_sizes": [
+    40000
+  ],
+  "brute_force_budget_seconds": 600,
+  "seed": 42
+}

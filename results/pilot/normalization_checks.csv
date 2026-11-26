@@ -1,0 +1,4 @@
+submission,framework,base_model,expected,runs,steps,missing_or_ineligible,parse_failures,parse_failure_rate,other_bash,other_bash_rate,resolved,unresolved,official_resolved,official_denominator,observed_failure_rate,official_resolve_rate,absolute_failure_rate_difference,passed
+20250522_sweagent_claude-4-sonnet-20250514,SWE-agent,claude-4-sonnet-20250514,8,8,434,0,0,0.0,1,0.002304147465437788,4,4,333,500,0.5,0.666,0.16600000000000004,True
+20250524_openhands_claude_4_sonnet,OpenHands,claude-4-sonnet-20250514,8,8,519,0,0,0.0,0,0.0,5,3,352,500,0.375,0.704,0.07899999999999996,True
+20250726_mini-v1.0.0_claude-sonnet-4-20250514,mini-SWE-agent,claude-4-sonnet-20250514,8,8,321,0,0,0.0,0,0.0,3,5,324,500,0.625,0.648,0.273,True

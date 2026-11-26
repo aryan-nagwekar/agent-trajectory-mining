@@ -1,0 +1,20 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+pandas==2.3.3
+pyarrow==21.0.0
+numpy==2.2.6
+scipy==1.15.3
+scikit-learn==1.7.2
+lightgbm==4.6.0
+torch==2.8.0+cpu ; sys_platform == "linux" and platform_machine == "x86_64"
+torch==2.8.0 ; sys_platform != "linux" or platform_machine != "x86_64"
+datasketch==1.6.5
+networkx==3.5
+statsmodels==0.14.5
+matplotlib==3.10.7
+seaborn==0.13.2
+PyYAML==6.0.3
+tqdm==4.67.1
+pytest==8.4.2
+streamlit==1.51.0
+ijson==3.4.0.post0
+requests==2.34.2

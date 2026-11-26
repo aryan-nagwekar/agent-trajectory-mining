@@ -1,0 +1,11 @@
+{
+  "k": 3,
+  "threshold": 0.4,
+  "failed_runs": 2169,
+  "communities": 7,
+  "covered_runs": 265,
+  "criteria": {
+    "min_coverage": 0.05,
+    "max_largest_share": 0.85
+  }
+}

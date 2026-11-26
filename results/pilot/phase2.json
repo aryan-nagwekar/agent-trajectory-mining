@@ -1,0 +1,143 @@
+{
+  "cohort": "pilot",
+  "status": "passed",
+  "submissions": 3,
+  "runs": 24,
+  "steps": 1274,
+  "validation_rows": 300,
+  "validation_rows_by_framework": {
+    "OpenHands": 100,
+    "SWE-agent": 100,
+    "mini-SWE-agent": 100
+  },
+  "experiments_commit": "40f164d5b8f1d249bf95a6df8b74b577fd8e519d",
+  "config": {
+    "seed": 42,
+    "experiments_commit": "40f164d5b8f1d249bf95a6df8b74b577fd8e519d",
+    "base_model": "claude-4-sonnet-20250514",
+    "example_tasks": [
+      "django__django-11734",
+      "scikit-learn__scikit-learn-9288"
+    ],
+    "submissions": [
+      {
+        "framework": "SWE-agent",
+        "submission": "20250522_sweagent_claude-4-sonnet-20250514",
+        "results_path": "results/results.json",
+        "trajectories": {
+          "pylint-dev__pylint-7277": "verified/20250522_sweagent_claude-4-sonnet-20250514/trajs/pylint-dev__pylint-7277/pylint-dev__pylint-7277.traj",
+          "django__django-11734": "verified/20250522_sweagent_claude-4-sonnet-20250514/trajs/django__django-11734/django__django-11734.traj",
+          "astropy__astropy-14508": "verified/20250522_sweagent_claude-4-sonnet-20250514/trajs/astropy__astropy-14508/astropy__astropy-14508.traj",
+          "scikit-learn__scikit-learn-9288": "verified/20250522_sweagent_claude-4-sonnet-20250514/trajs/scikit-learn__scikit-learn-9288/scikit-learn__scikit-learn-9288.traj",
+          "django__django-14034": "verified/20250522_sweagent_claude-4-sonnet-20250514/trajs/django__django-14034/django__django-14034.traj",
+          "django__django-13741": "verified/20250522_sweagent_claude-4-sonnet-20250514/trajs/django__django-13741/django__django-13741.traj",
+          "django__django-13417": "verified/20250522_sweagent_claude-4-sonnet-20250514/trajs/django__django-13417/django__django-13417.traj",
+          "pydata__xarray-6992": "verified/20250522_sweagent_claude-4-sonnet-20250514/trajs/pydata__xarray-6992/pydata__xarray-6992.traj"
+        }
+      },
+      {
+        "framework": "OpenHands",
+        "submission": "20250524_openhands_claude_4_sonnet",
+        "results_path": "results/results.json",
+        "trajectories": {
+          "pylint-dev__pylint-7277": "verified/20250524_openhands_claude_4_sonnet/trajs/pylint-dev__pylint-7277.json",
+          "django__django-11734": "verified/20250524_openhands_claude_4_sonnet/trajs/django__django-11734.json",
+          "astropy__astropy-14508": "verified/20250524_openhands_claude_4_sonnet/trajs/astropy__astropy-14508.json",
+          "scikit-learn__scikit-learn-9288": "verified/20250524_openhands_claude_4_sonnet/trajs/scikit-learn__scikit-learn-9288.json",
+          "django__django-14034": "verified/20250524_openhands_claude_4_sonnet/trajs/django__django-14034.json",
+          "django__django-13741": "verified/20250524_openhands_claude_4_sonnet/trajs/django__django-13741.json",
+          "django__django-13417": "verified/20250524_openhands_claude_4_sonnet/trajs/django__django-13417.json",
+          "pydata__xarray-6992": "verified/20250524_openhands_claude_4_sonnet/trajs/pydata__xarray-6992.json"
+        }
+      },
+      {
+        "framework": "mini-SWE-agent",
+        "submission": "20250726_mini-v1.0.0_claude-sonnet-4-20250514",
+        "results_path": "per_instance_details.json",
+        "trajectories": {
+          "pylint-dev__pylint-7277": "bash-only/20250726_mini-v1.0.0_claude-sonnet-4-20250514/trajs/pylint-dev__pylint-7277/pylint-dev__pylint-7277.traj.json",
+          "django__django-11734": "bash-only/20250726_mini-v1.0.0_claude-sonnet-4-20250514/trajs/django__django-11734/django__django-11734.traj.json",
+          "astropy__astropy-14508": "bash-only/20250726_mini-v1.0.0_claude-sonnet-4-20250514/trajs/astropy__astropy-14508/astropy__astropy-14508.traj.json",
+          "scikit-learn__scikit-learn-9288": "bash-only/20250726_mini-v1.0.0_claude-sonnet-4-20250514/trajs/scikit-learn__scikit-learn-9288/scikit-learn__scikit-learn-9288.traj.json",
+          "django__django-14034": "bash-only/20250726_mini-v1.0.0_claude-sonnet-4-20250514/trajs/django__django-14034/django__django-14034.traj.json",
+          "django__django-13741": "bash-only/20250726_mini-v1.0.0_claude-sonnet-4-20250514/trajs/django__django-13741/django__django-13741.traj.json",
+          "django__django-13417": "bash-only/20250726_mini-v1.0.0_claude-sonnet-4-20250514/trajs/django__django-13417/django__django-13417.traj.json",
+          "pydata__xarray-6992": "bash-only/20250726_mini-v1.0.0_claude-sonnet-4-20250514/trajs/pydata__xarray-6992/pydata__xarray-6992.traj.json"
+        }
+      }
+    ],
+    "verified_roster": "20250726_mini-v1.0.0_claude-sonnet-4-20250514/per_instance_details.json",
+    "verified_task_count": 500,
+    "phase2": {
+      "max_parse_failure": 0.1,
+      "max_other_bash": 0.15,
+      "resolve_rate_tolerance": 0.01,
+      "validation_size": 300
+    }
+  },
+  "checks": [
+    {
+      "submission": "20250522_sweagent_claude-4-sonnet-20250514",
+      "framework": "SWE-agent",
+      "base_model": "claude-4-sonnet-20250514",
+      "expected": 8,
+      "runs": 8,
+      "steps": 434,
+      "missing_or_ineligible": 0,
+      "parse_failures": 0,
+      "parse_failure_rate": 0.0,
+      "other_bash": 1,
+      "other_bash_rate": 0.002304147465437788,
+      "resolved": 4,
+      "unresolved": 4,
+      "official_resolved": 333,
+      "official_denominator": 500,
+      "observed_failure_rate": 0.5,
+      "official_resolve_rate": 0.666,
+      "absolute_failure_rate_difference": 0.16600000000000004,
+      "passed": true
+    },
+    {
+      "submission": "20250524_openhands_claude_4_sonnet",
+      "framework": "OpenHands",
+      "base_model": "claude-4-sonnet-20250514",
+      "expected": 8,
+      "runs": 8,
+      "steps": 519,
+      "missing_or_ineligible": 0,
+      "parse_failures": 0,
+      "parse_failure_rate": 0.0,
+      "other_bash": 0,
+      "other_bash_rate": 0.0,
+      "resolved": 5,
+      "unresolved": 3,
+      "official_resolved": 352,
+      "official_denominator": 500,
+      "observed_failure_rate": 0.375,
+      "official_resolve_rate": 0.704,
+      "absolute_failure_rate_difference": 0.07899999999999996,
+      "passed": true
+    },
+    {
+      "submission": "20250726_mini-v1.0.0_claude-sonnet-4-20250514",
+      "framework": "mini-SWE-agent",
+      "base_model": "claude-4-sonnet-20250514",
+      "expected": 8,
+      "runs": 8,
+      "steps": 321,
+      "missing_or_ineligible": 0,
+      "parse_failures": 0,
+      "parse_failure_rate": 0.0,
+      "other_bash": 0,
+      "other_bash_rate": 0.0,
+      "resolved": 3,
+      "unresolved": 5,
+      "official_resolved": 324,
+      "official_denominator": 500,
+      "observed_failure_rate": 0.625,
+      "official_resolve_rate": 0.648,
+      "absolute_failure_rate_difference": 0.273,
+      "passed": true
+    }
+  ]
+}

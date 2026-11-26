@@ -1,0 +1,4 @@
+framework_a,framework_b,a_patterns,b_patterns,overlap,union,jaccard,shared_patterns
+OpenHands,SWE-agent,13,30,0,43,0.0,
+OpenHands,mini-SWE-agent,13,2,0,15,0.0,
+SWE-agent,mini-SWE-agent,30,2,0,32,0.0,

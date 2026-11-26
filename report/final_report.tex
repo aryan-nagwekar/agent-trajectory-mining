@@ -1,0 +1,198 @@
+\documentclass{article}
+\usepackage[preprint]{neurips_2024}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\urlstyle{same}
+\hypersetup{hidelinks}
+\raggedbottom
+\input{../results/macros.tex}
+\graphicspath{{../figures/}}
+\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{6pt plus 2pt minus 2pt}
+\newcommand{\panel}[2]{\includegraphics[width=\linewidth,height=#1\textheight,keepaspectratio]{#2.pdf}}
+\newcommand{\sftable}[1]{\resizebox{\linewidth}{!}{\input{../results/tables/#1.tex}}}
+
+\title{Doomed in the First Steps?\\Mining Execution Logs for Early Failure Prediction in Coding Agents}
+\author{Aryan Nagwekar (an1262) \\ Rutgers University
+\And Niyam Momaya (nkm66) \\ Rutgers University
+\And Navneet Deswal (ns1865) \\ Rutgers University}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We test whether normalized execution logs can predict coding-agent failure early enough to save work.
+On a fixed cohort, LightGBM attains AUROC \FixedFive{} at step \StepFive{}, \FixedTwenty{} at step \StepTwenty{}, and \FixedForty{} at step \StepForty{} (mean $\pm$ standard deviation over outer folds).
+At step \StepTwenty{}, comparisons between successful and failed runs on the same task give AUROC \SameTask{}, establishing discrimination beyond task-level difficulty.
+At $\alpha=\AlphaHigh$, a multi-checkpoint policy saves \MultiSave{} of estimated character cost and catches \MultiCatch{} of failures, with \MultiFalse{} false stops among eventual successes (Wilson interval [\MultiLo{}, \MultiHi{}]).
+Transfer is weaker. At step \StepTwenty{}, held-framework AUROC is \TransferOpen{} for OpenHands, \TransferSWE{} for SWE-agent, and \TransferMini{} for mini-SWE-agent. The OpenHands single-checkpoint false-stop rate reaches \TransferFalse{} at $\alpha=\AlphaHigh$, and the retained framework-specific pattern lists have \PatternOverlap{} pairwise overlaps.
+\end{abstract}
+
+\section{Introduction}
+Coding agents interleave file inspection, edits, tool calls, and tests while trying to resolve repository issues. A long trace can consume substantial generation and tool output before an evaluator determines that the task remains unresolved. Execution logs offer a practical surface for monitoring agents whose internal model activations are unavailable. To study that surface, we combine public traces from SWE-bench Verified \citep{jimenez,sweverified} with task-disjoint model fitting and retrospective policy replay.
+
+We ask three questions. \textbf{RQ1} asks which whole-run action patterns and archetypes persist after accounting for task difficulty. \textbf{RQ2} asks how early observable actions predict failure and what an early-stop policy would save. \textbf{RQ3} asks whether the patterns, predictors, and policy thresholds transfer to another framework on unseen tasks. Whole-run pattern discovery serves as a descriptive analysis. A separate fold-specific feature pipeline tests which training-derived patterns are useful for prediction.
+
+\section{Related work}
+\citet{mehtiyev} show that task difficulty can confound the trajectory-length association and highlight the role of agent behavior. We compare coarse difficulty strata and also score positive--negative pairs on the exact same task. \citet{ruan} use hidden-state probes to construct early abort cascades, and \citet{zhang} train an online auditor to anticipate decisive errors. Our approach uses only execution logs and returns an eventual benchmark failure score at fixed checkpoints. Our sequence mining follows prefix-projected growth \citep{pei}. MinHash and banded locality-sensitive hashing provide a candidate index for Jaccard similarity \citep{broder,mmdata}. Thresholding follows the order-statistic construction of split conformal prediction \citep{angelopoulos}.
+
+\clearpage
+\section{Data and normalization}
+We retain \StudyRuns{} labeled runs covering \StudyTasks{} distinct Verified tasks from \StudySubmissions{} submissions and normalize \StudySteps{} recorded steps. Each task can appear in several submissions. A failed run is one whose patch did not resolve the issue according to its submission's benchmark results. We exclude traces for which the evaluation logs or generation are unavailable. The data card records submissions, exclusions, and the label-join checks.
+
+\begin{table}[H]
+\centering
+\caption{Usable runs and official resolution rates by submission.}
+\sftable{dataset}
+\end{table}
+
+SWE-agent exports native action records, OpenHands can pair tool calls with results by call identifier, and mini-SWE-agent commonly embeds shell commands and return codes in messages. The parsers convert these formats to action tokens with coarse outcome tags, including whether a test passed or failed when the output supports that inference. Character counts include observed model text and tool output. Per-step token costs are unavailable across the cohort, so policy savings use characters as a common cost proxy.
+
+\begin{figure}[H]
+\centering\panel{.17}{01_pipeline}
+\caption{From raw execution logs to grouped prediction and calibrated stopping.}
+\end{figure}
+
+\begin{figure}[H]
+\centering\panel{.20}{02_dataset}
+\caption{Run counts, step counts, and failure prevalence by retrospective task difficulty.}
+\end{figure}
+
+\textbf{TODO: Validation agreement.} The seeded \ValidationSize{}-step sample awaits human action and outcome labels. The scoring script reports agreement once those labels are available.
+
+\clearpage
+\section{Methods and evaluation design}
+GroupKFold assigns all runs for a task to one outer fold. Inside the remaining tasks, a disjoint calibration partition is reserved for policy thresholds. Model selection, reference extraction, and hyperparameter tuning use training tasks only. For framework holdout we cross each held-out framework with the same task-fold design. Each of the \LOFOCount{} resulting splits tests the held framework on only the held-out tasks, and fits and calibrates on different tasks from the remaining frameworks.
+
+\subsection{RQ1: Descriptive sequence mining}
+We collapse repeated adjacent tokens into length buckets. For each outer training split, PrefixSpan mines candidate subsequences separately among failed and resolved trajectories using \PatternSupport{} support, a length cap of \PatternLength{}, and up to \PatternGap{} intervening tokens between matches. Held-out runs give binary presence counts. Fisher's exact test evaluates marginal differences, and a Cochran--Mantel--Haenszel (CMH) test pools evidence across retrospective task-difficulty bins. Difficulty uses the observed solve rate across submissions and remains outside the predictive feature set.
+
+The primary tier requires the Bonferroni-corrected Fisher and CMH tests to agree in direction. The robust tier also passes a task-clustered score check. The same tasks repeat across submissions, so outcomes and behaviors of runs on those tasks can be dependent. That dependence motivates the task-clustered check. Benjamini--Hochberg counts are secondary.
+
+\begin{figure}[H]
+\centering\panel{.222}{04_patterns}
+\caption{Primary and robust held-out patterns, with marginal log odds ratios and unadjusted intervals.}
+\end{figure}
+
+\subsection{RQ1 results: Patterns and length}
+Among \CandidatePatterns{} distinct held-out candidates, \RobustPatterns{} patterns met the robust criterion and \PrimaryPatterns{} met the primary criterion. The marginal Fisher comparison alone retained \FisherPatterns{}. Recurrent edit-related patterns characterize some failures. Successful script and test outcomes appear among the success-associated patterns. These are associations in complete traces, which can include behavior immediately preceding termination.
+
+
+
+\begin{figure}[H]
+\centering\panel{.13}{03_length_confound}
+\caption{Length and failure overall and within difficulty bins. The pooled bin-centered correlation is \LengthWithin{} versus \LengthOverall{} overall.}
+\end{figure}
+
+\clearpage
+\subsection{RQ1 results: Failure archetypes and candidate workload}
+We form shingles of collapsed base actions, index MinHash signatures, and verify retrieved edges using exact Jaccard similarity. Connected components or seeded Louvain communities summarize the failed-run graph. The descriptive sweep examines granularity and cutoff. Its selected base-action configuration uses shingles of length \ArchetypeGram{} at Jaccard at least \ArchetypeCutoff{}. With the minimum size \ArchetypeMin{}, it identifies \ArchetypeCount{} communities containing \ArchetypeRuns{} of \AllFailed{} failed runs. Training-fold feature fitting repeats the selection inside the corresponding training sets. \textbf{TODO: Archetype names.} Human names and taxonomy codes remain pending.
+
+\begin{figure}[H]
+\centering\panel{.25}{05_archetypes}
+\caption{Archetype sizes, framework composition, and representative action strips.}
+\end{figure}
+
+In the window benchmark we take \StudyWidth{}-step windows at stride \StudyStride{}, including windows from resolved runs. The index uses \HashCount{} permutations in \WindowBands{} bands of \WindowRows{} rows. On \WindowCount{} windows, LSH verifies \CandidatePairs{} candidates out of \ExactPairs{} possible pairs at \WindowRecall{} recall. The fitted pair-workload slopes are \CandidateSlope{} for LSH candidates and \ExactPairSlope{} for all-pairs enumeration. Fitted wall-time slopes are \LSHTimeSlope{} and \ExactTimeSlope{}, respectively. Compiled exact search is slightly faster at the largest sample (\WindowExactSeconds{} versus \WindowLSHSeconds{} seconds). The intended LSH advantage is asymptotic when candidate growth stays sparse. The observed pair slopes are close to quadratic and do not establish an asymptotic speedup on this corpus.
+
+\begin{figure}[H]
+\centering\panel{.22}{06_lsh_pairs}
+\caption{Candidate pairs, measured wall time, and recall against exact threshold matches.}
+\end{figure}
+
+
+
+\clearpage
+\section{RQ2: How early do prefixes discriminate?}
+We evaluate observed prefixes at steps \CurvePoints{}. A steps-only logistic baseline uses cumulative observable cost and the visible submission flag. The bag-of-actions logistic baseline uses counts and proportions. LightGBM \citep{ke} adds action n-grams, simple dynamics, indicators for the top \PatternK{} training-ranked patterns, and similarities to training-fold archetypes. A GRU uses the raw sequence of prefix tokens. We rank predictive patterns by training support difference regardless of statistical significance. Grouped inner validation tunes the baselines and selects tree and GRU stopping points. The LLM judge remains optional and was skipped because an API key was not supplied.
+
+\begin{figure}[H]
+\centering\panel{.23}{07_fixed_cohort}
+\caption{How-early result on the fixed cohort. Shaded bands show fold standard deviations.}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Fixed-cohort AUROC by checkpoint, shown as mean $\pm$ fold SD.}
+\sftable{fixed_auroc}
+\end{table}
+
+The fixed cohort contains \FixedRuns{} runs and a \FixedFailure{} failure rate at every checkpoint. The LightGBM AUROC bootstrap intervals at steps \StepFive{}, \StepTwenty{}, and \StepForty{} are [\FixedFiveBoot{}], [\FixedTwentyBoot{}], and [\FixedFortyBoot{}], resampling held-out tasks within folds. At step \StepTen{}, the highest mean AUROC is \BestTenAUC{} for \BestTenModel{}. At step \StepTwenty{}, the highest is \BestTwentyAUC{} for \BestTwentyModel{}. The deployment cohort includes each run that reaches the checkpoint, with failure prevalence moving from \DeploymentFive{} to \DeploymentForty{} between the first and final checkpoints. Its increasing prevalence affects comparisons across checkpoints. Full AUROC and PR-AUC tables are generated with the report.
+
+\begin{figure}[H]
+\centering\panel{.18}{07b_same_task_pairs}
+\caption{The signal persists within difficulty bins and within same-task positive--negative pairs. Same-task AUROC reaches \SameTask{} at step \StepTwenty{}.}
+\end{figure}
+
+\clearpage
+\subsection{RQ2: Retrospective stopping policy}
+For each fold and checkpoint, we use the successful calibration scores and the one-based order statistic $\lceil(n+\One)(\One-\alpha)\rceil$. When the rank exceeds the calibration sample size, the threshold is infinite. A policy stops only on a strict score exceedance while the run has more work to do. Single-checkpoint policies use their requested budget directly. The multi-checkpoint policy allocates it across checkpoints by Bonferroni and uses the first crossing.
+
+We sum observed characters after the stop and divide by the total recorded character cost of all test runs. False stops in the main table use all eventual successes. We report continuing-success rates separately so that late checkpoints remain interpretable. Wilson intervals are nominal run-level uncertainty summaries. Repeated tasks can affect coverage, and exchangeability is especially questionable under framework shift.
+
+\begin{figure}[H]
+\centering\panel{.22}{08_compute_saved}
+\caption{Saved character cost and false stops. Diamonds denote the multi-checkpoint policy. Bars mark nominal Wilson intervals.}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{LightGBM policy replay across both budgets. Failures caught use all failed runs.}
+\sftable{early_stop}
+\end{table}
+
+The Bonferroni policy is conservative in the grouped replay: realized false stops of \LowFalse{} and \MultiFalse{} are below the corresponding budgets. These are lower bounds on gross savings attainable by any coordinate-wise threshold relaxation that remains feasible on the same cohort. Independent validation is required before assuming that relaxed thresholds will meet the target on future runs. The highest-savings singles are step \SingleLowRawT{} (\SingleLowRawSave{} saved) at $\alpha=\AlphaLow$ and step \SingleHighRawT{} (\SingleHighRawSave{} saved) at $\alpha=\AlphaHigh$. Requiring the observed continuing-success false-stop rate to stay within budget moves the best singles to step \SingleLowEligibleT{} (\SingleLowEligibleSave{}) and step \SingleHighEligibleT{} (\SingleHighEligibleSave{}), respectively.
+
+\clearpage
+\subsection{RQ2: Feature ablation}
+The LightGBM ablations show no consistent predictive gain from adding pattern indicators or archetype similarities. Pattern indicators can capture full-trace motifs that are rarely visible early, and only a small subset of descriptive patterns is robust to difficulty adjustment and repeated tasks. The archetypes cover a limited fraction of failed runs, and similarities to those archetypes change little for many short prefixes. The descriptive clusters and the predictor therefore answer different questions. The original shuffled-label LightGBM control was \ShuffleAUROC{} AUROC.
+
+\begin{figure}[H]
+\centering\panel{.18}{09_ablation}
+\caption{Paired LightGBM ablations at step \StepTwenty{}. The archetype row uses the training-only refit. A positive value favors removing the group.}
+\end{figure}
+
+\section{RQ3: Transfer across agent frameworks}
+Holding out a framework and whole tasks weakens the detector. At step \StepTwenty{}, AUROC is \TransferOpen{} for OpenHands, \TransferSWE{} for SWE-agent, and \TransferMini{} for mini-SWE-agent. Stopping thresholds calibrated on the other frameworks reach \TransferFalse{} false stops on OpenHands at that checkpoint and $\alpha=\AlphaHigh$ (Wilson interval [\TransferLo{}, \TransferHi{}]). The retained Fisher-Bonferroni pattern lists have \PatternOverlap{} pairwise intersections. This result concerns the tested lists and support thresholds. The three frameworks have unequal outcome and tool distributions, and their base-model mixtures differ.
+
+\begin{figure}[H]
+\centering\panel{.20}{10_transfer}
+\caption{Task-disjoint framework transfer. Each row trains on the two remaining frameworks.}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Held-out-framework LightGBM AUROC over all tested checkpoints.}
+\sftable{transfer}
+\end{table}
+
+\clearpage
+\section{Limitations and threats to validity}
+The fixed cohort is selected retrospectively using recorded run length. It measures early information among runs that last through the final checkpoint. The deployment view covers all runs reaching each checkpoint and is the relevant cohort for policy replay. An evaluation trace represents one observed outcome, and stopping or rerunning it could alter behavior in live use. Character counts approximate recorded cost and omit prices, input-token costs, execution time, and intervention costs.
+
+Difficulty bins are estimated from the available outcomes. The within-task comparison restricts attention to tasks that have both a resolved and unresolved run and measures signal beyond a shared task-level effect. Framework, model, and tool-interface differences can remain within those comparisons. Neither stratification nor same-task comparison identifies a causal share. Wilson intervals summarize individual runs approximately even though submissions can repeat tasks. Framework shift can invalidate the score-exchangeability premise needed for conformal guarantees.
+
+The window benchmark reuses overlapping windows and measures this population and implementation. The exact comparator uses compiled code and length and intersection bounds. Candidate pruning can become more valuable as the data grow, but the measured pair slopes and timing provide evidence only at the observed sizes. Manual action labels and archetype names still need verification.
+
+\section{Conclusion}
+Logs support useful early failure discrimination on the fixed cohort and within same-task pairs. The grouped stopping replay shows sizable character savings at realized false-stop rates below the nominal budgets. Under framework holdout, weaker AUROC, a calibration breach on OpenHands, and absent overlap among the retained significant-pattern lists expose the limits of transfer. These findings separate a promising within-domain detector from the stronger evidence needed for a reliable cross-framework intervention.
+
+\begin{figure}[H]
+\centering\panel{.22}{11_replay}
+\caption{Real held-out replay examples. Blue shows checkpoint probabilities, orange shows calibrated thresholds, and the vertical mark denotes the first policy stop. The demo scores the visible prefix with the saved model appropriate to its checkpoint.}
+\end{figure}
+
+\paragraph{Reproducibility.}
+The source project includes task splits, calibration thresholds, model bundles, figures, tabular outputs, a replay demo, and an audit checklist. The generated numeric macros and tables supply the empirical values used here.
+
+\textbf{TODO: Confirm the course page limit.} The preprint is organized as eight content pages plus references.
+
+\clearpage
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}

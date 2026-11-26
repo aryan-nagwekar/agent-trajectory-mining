@@ -1,0 +1,3 @@
+DYLD_LIBRARY_PATH="/Users/aryannagwekar/projects/agent-trajectory-mining/.venv/lib/python3.11/site-packages/torch/lib:" MPLCONFIGDIR=/tmp/atm-mpl PYTHONPATH=src ".venv/bin/python" -m pytest -q
+.......................................................................  [100%]
+71 passed in 5.66s

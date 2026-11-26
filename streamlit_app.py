@@ -1,0 +1,11 @@
+"""Repository-root entry point for the held-out replay demo."""
+
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
+
+from atm.demo.app import main
+
+if __name__ == "__main__":
+    main()

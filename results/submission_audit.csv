@@ -1,0 +1,11 @@
+framework,submission,base_model,runs,failures,official_resolve_rate,observed_resolve_rate
+OpenHands,20241029_OpenHands-CodeAct-2.1-sonnet-20241022,claude-3-5-sonnet-20241022,493,228,0.53,0.537525354969574
+OpenHands,20250520_openhands_devstral_small,mistralai/Devstral-Small-2505,492,258,0.468,0.47560975609756095
+OpenHands,20250524_openhands_claude_4_sonnet,claude-4-sonnet-20250514,499,147,0.704,0.7054108216432866
+OpenHands,20250807_openhands_gpt5,openai/gpt-5-2025-08-07,499,140,0.718,0.719438877755511
+SWE-agent,20240620_sweagent_claude3.5sonnet,claude-3-5-sonnet-20241022,486,318,0.336,0.345679012345679
+SWE-agent,20250511_sweagent_lm_32b,Qwen 2.5,496,295,0.402,0.405241935483871
+SWE-agent,20250522_sweagent_claude-4-sonnet-20250514,claude-4-sonnet-20250514,500,167,0.666,0.6659999999999999
+mini-SWE-agent,20250726_mini-v1.0.0_claude-sonnet-4-20250514,claude-4-sonnet-20250514,500,176,0.648,0.648
+mini-SWE-agent,20250726_mini-v1.0.0_gemini-2.5-pro,gemini-2.5-pro,500,232,0.536,0.536
+mini-SWE-agent,20250726_mini-v1.0.0_o3-2025-04-16,o3-20250416,500,208,0.584,0.5840000000000001

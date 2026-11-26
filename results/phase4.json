@@ -1,0 +1,488 @@
+{
+  "total": {
+    "tests": 18124,
+    "unique_candidates": 4250,
+    "fisher_bonf": {
+      "fold_pattern_tests": 78,
+      "unique_patterns": 72,
+      "patterns_in_multiple_folds": 6
+    },
+    "fisher_bh": {
+      "fold_pattern_tests": 1188,
+      "unique_patterns": 758,
+      "patterns_in_multiple_folds": 284
+    },
+    "cmh_bonf": {
+      "fold_pattern_tests": 106,
+      "unique_patterns": 95,
+      "patterns_in_multiple_folds": 8
+    },
+    "cmh_bh": {
+      "fold_pattern_tests": 1714,
+      "unique_patterns": 1060,
+      "patterns_in_multiple_folds": 423
+    },
+    "both_bonf_directional": {
+      "fold_pattern_tests": 15,
+      "unique_patterns": 13,
+      "patterns_in_multiple_folds": 2
+    },
+    "both_bh_directional": {
+      "fold_pattern_tests": 677,
+      "unique_patterns": 480,
+      "patterns_in_multiple_folds": 141
+    },
+    "cluster_bonf": {
+      "fold_pattern_tests": 44,
+      "unique_patterns": 30,
+      "patterns_in_multiple_folds": 10
+    },
+    "surviving_cluster_bonf": {
+      "fold_pattern_tests": 5,
+      "unique_patterns": 4,
+      "patterns_in_multiple_folds": 1
+    }
+  },
+  "config": {
+    "seed": 42,
+    "experiments_commit": "40f164d5b8f1d249bf95a6df8b74b577fd8e519d",
+    "submissions": [
+      {
+        "framework": "SWE-agent",
+        "submission": "20250522_sweagent_claude-4-sonnet-20250514",
+        "base_model": "claude-4-sonnet-20250514",
+        "results_path": "results/results.json",
+        "trajectory_prefix": "verified/20250522_sweagent_claude-4-sonnet-20250514/trajs"
+      },
+      {
+        "framework": "SWE-agent",
+        "submission": "20240620_sweagent_claude3.5sonnet",
+        "base_model": "claude-3-5-sonnet-20241022",
+        "results_path": "results/results.json",
+        "trajectory_prefix": "verified/20240620_sweagent_claude3.5sonnet/trajs"
+      },
+      {
+        "framework": "SWE-agent",
+        "submission": "20250511_sweagent_lm_32b",
+        "base_model": "Qwen 2.5",
+        "results_path": "results/results.json",
+        "trajectory_prefix": "verified/20250511_sweagent_lm_32b/trajs"
+      },
+      {
+        "framework": "OpenHands",
+        "submission": "20250524_openhands_claude_4_sonnet",
+        "base_model": "claude-4-sonnet-20250514",
+        "results_path": "results/results.json",
+        "trajectory_prefix": "verified/20250524_openhands_claude_4_sonnet/trajs"
+      },
+      {
+        "framework": "OpenHands",
+        "submission": "20241029_OpenHands-CodeAct-2.1-sonnet-20241022",
+        "base_model": "claude-3-5-sonnet-20241022",
+        "results_path": "results/results.json",
+        "trajectory_prefix": "verified/20241029_OpenHands-CodeAct-2.1-sonnet-20241022/trajs"
+      },
+      {
+        "framework": "OpenHands",
+        "submission": "20250520_openhands_devstral_small",
+        "base_model": "mistralai/Devstral-Small-2505",
+        "results_path": "results/results.json",
+        "trajectory_prefix": "verified/20250520_openhands_devstral_small/trajs"
+      },
+      {
+        "framework": "OpenHands",
+        "submission": "20250807_openhands_gpt5",
+        "base_model": "openai/gpt-5-2025-08-07",
+        "results_path": "results/results.json",
+        "trajectory_prefix": "verified/20250807_openhands_gpt5/trajs"
+      },
+      {
+        "framework": "mini-SWE-agent",
+        "submission": "20250726_mini-v1.0.0_claude-sonnet-4-20250514",
+        "base_model": "claude-4-sonnet-20250514",
+        "results_path": "per_instance_details.json",
+        "trajectory_prefix": "bash-only/20250726_mini-v1.0.0_claude-sonnet-4-20250514/trajs"
+      },
+      {
+        "framework": "mini-SWE-agent",
+        "submission": "20250726_mini-v1.0.0_gemini-2.5-pro",
+        "base_model": "gemini-2.5-pro",
+        "results_path": "per_instance_details.json",
+        "trajectory_prefix": "bash-only/20250726_mini-v1.0.0_gemini-2.5-pro/trajs"
+      },
+      {
+        "framework": "mini-SWE-agent",
+        "submission": "20250726_mini-v1.0.0_o3-2025-04-16",
+        "base_model": "o3-20250416",
+        "results_path": "per_instance_details.json",
+        "trajectory_prefix": "bash-only/20250726_mini-v1.0.0_o3-2025-04-16/trajs"
+      }
+    ],
+    "verified_roster": "20250726_mini-v1.0.0_claude-sonnet-4-20250514/per_instance_details.json",
+    "verified_task_count": 500,
+    "phase2": {
+      "max_parse_failure": 0.1,
+      "max_other_bash": 0.15,
+      "resolve_rate_tolerance": 0.01,
+      "validation_size": 300
+    },
+    "download_workers": 24,
+    "cohort": "expanded",
+    "audit": {
+      "min_submissions": 2,
+      "min_runs": 1000,
+      "max_token_share": 0.4,
+      "max_test_none_share": 0.3
+    },
+    "splits": {
+      "n_splits": 5,
+      "calibration_fraction": 0.2,
+      "difficulty_cutoffs": [
+        "1/3",
+        "2/3"
+      ]
+    },
+    "mining": {
+      "min_support": 0.05,
+      "max_pattern_len": 5,
+      "max_gap": 3,
+      "alpha": 0.05
+    },
+    "clustering": {
+      "k": 4,
+      "sensitivity_k": [
+        3,
+        5
+      ],
+      "num_perm": 128,
+      "threshold": 0.6,
+      "bands": 32,
+      "rows": 4,
+      "min_size": 20,
+      "max_component": 250,
+      "benchmark_sizes": [
+        500,
+        1000,
+        2000,
+        4000,
+        8000
+      ],
+      "benchmark_repeats": 3,
+      "min_recall": 0.8
+    },
+    "prediction": {
+      "checkpoints": [
+        5,
+        10,
+        15,
+        20,
+        30,
+        40
+      ],
+      "top_patterns": 50,
+      "top_ngrams": 200,
+      "inner_folds": 3,
+      "inner_validation": 0.2,
+      "logistic_c": [
+        0.01,
+        0.1,
+        1.0,
+        10.0
+      ],
+      "lightgbm_candidates": [
+        [
+          15,
+          0.075,
+          250
+        ],
+        [
+          31,
+          0.04,
+          350
+        ]
+      ],
+      "lightgbm_patience": 20,
+      "cpu_threads": 2,
+      "gru_embedding": 32,
+      "gru_hidden": 64,
+      "gru_dropout": 0.2,
+      "gru_epochs": 16,
+      "gru_patience": 3,
+      "gru_batch": 96,
+      "gru_lr": 0.003,
+      "shuffled_checkpoint": 20,
+      "shuffled_repeats": 3,
+      "shuffled_trees": 80,
+      "archetype_views": [
+        [
+          "tokens",
+          4
+        ],
+        [
+          "actions",
+          3
+        ]
+      ]
+    },
+    "archetype_sweep": {
+      "k_values": [
+        3,
+        4
+      ],
+      "thresholds": [
+        0.3,
+        0.4,
+        0.5,
+        0.6
+      ],
+      "selection_min_coverage": 0.05,
+      "selection_max_largest_share": 0.85
+    },
+    "window_benchmark": {
+      "width": 20,
+      "stride": 5,
+      "sizes": [
+        5000,
+        10000,
+        20000,
+        40000
+      ],
+      "exact_budget_seconds": 600,
+      "bands": 42,
+      "rows": 3
+    },
+    "policy": {
+      "alphas": [
+        0.05,
+        0.1
+      ],
+      "primary_model": "lightgbm"
+    },
+    "presentation": {
+      "bootstrap_replicates": 1000
+    }
+  },
+  "experiments_commit": "40f164d5b8f1d249bf95a6df8b74b577fd8e519d",
+  "folds": {
+    "1": {
+      "tests": 3513,
+      "unique_candidates": 3513,
+      "fisher_bonf": {
+        "fold_pattern_tests": 23,
+        "unique_patterns": 23,
+        "patterns_in_multiple_folds": 0
+      },
+      "fisher_bh": {
+        "fold_pattern_tests": 231,
+        "unique_patterns": 231,
+        "patterns_in_multiple_folds": 0
+      },
+      "cmh_bonf": {
+        "fold_pattern_tests": 15,
+        "unique_patterns": 15,
+        "patterns_in_multiple_folds": 0
+      },
+      "cmh_bh": {
+        "fold_pattern_tests": 424,
+        "unique_patterns": 424,
+        "patterns_in_multiple_folds": 0
+      },
+      "both_bonf_directional": {
+        "fold_pattern_tests": 4,
+        "unique_patterns": 4,
+        "patterns_in_multiple_folds": 0
+      },
+      "both_bh_directional": {
+        "fold_pattern_tests": 127,
+        "unique_patterns": 127,
+        "patterns_in_multiple_folds": 0
+      },
+      "cluster_bonf": {
+        "fold_pattern_tests": 9,
+        "unique_patterns": 9,
+        "patterns_in_multiple_folds": 0
+      },
+      "surviving_cluster_bonf": {
+        "fold_pattern_tests": 2,
+        "unique_patterns": 2,
+        "patterns_in_multiple_folds": 0
+      }
+    },
+    "2": {
+      "tests": 3730,
+      "unique_candidates": 3730,
+      "fisher_bonf": {
+        "fold_pattern_tests": 2,
+        "unique_patterns": 2,
+        "patterns_in_multiple_folds": 0
+      },
+      "fisher_bh": {
+        "fold_pattern_tests": 159,
+        "unique_patterns": 159,
+        "patterns_in_multiple_folds": 0
+      },
+      "cmh_bonf": {
+        "fold_pattern_tests": 8,
+        "unique_patterns": 8,
+        "patterns_in_multiple_folds": 0
+      },
+      "cmh_bh": {
+        "fold_pattern_tests": 305,
+        "unique_patterns": 305,
+        "patterns_in_multiple_folds": 0
+      },
+      "both_bonf_directional": {
+        "fold_pattern_tests": 1,
+        "unique_patterns": 1,
+        "patterns_in_multiple_folds": 0
+      },
+      "both_bh_directional": {
+        "fold_pattern_tests": 76,
+        "unique_patterns": 76,
+        "patterns_in_multiple_folds": 0
+      },
+      "cluster_bonf": {
+        "fold_pattern_tests": 7,
+        "unique_patterns": 7,
+        "patterns_in_multiple_folds": 0
+      },
+      "surviving_cluster_bonf": {
+        "fold_pattern_tests": 1,
+        "unique_patterns": 1,
+        "patterns_in_multiple_folds": 0
+      }
+    },
+    "3": {
+      "tests": 3605,
+      "unique_candidates": 3605,
+      "fisher_bonf": {
+        "fold_pattern_tests": 0,
+        "unique_patterns": 0,
+        "patterns_in_multiple_folds": 0
+      },
+      "fisher_bh": {
+        "fold_pattern_tests": 49,
+        "unique_patterns": 49,
+        "patterns_in_multiple_folds": 0
+      },
+      "cmh_bonf": {
+        "fold_pattern_tests": 0,
+        "unique_patterns": 0,
+        "patterns_in_multiple_folds": 0
+      },
+      "cmh_bh": {
+        "fold_pattern_tests": 73,
+        "unique_patterns": 73,
+        "patterns_in_multiple_folds": 0
+      },
+      "both_bonf_directional": {
+        "fold_pattern_tests": 0,
+        "unique_patterns": 0,
+        "patterns_in_multiple_folds": 0
+      },
+      "both_bh_directional": {
+        "fold_pattern_tests": 15,
+        "unique_patterns": 15,
+        "patterns_in_multiple_folds": 0
+      },
+      "cluster_bonf": {
+        "fold_pattern_tests": 0,
+        "unique_patterns": 0,
+        "patterns_in_multiple_folds": 0
+      },
+      "surviving_cluster_bonf": {
+        "fold_pattern_tests": 0,
+        "unique_patterns": 0,
+        "patterns_in_multiple_folds": 0
+      }
+    },
+    "4": {
+      "tests": 3697,
+      "unique_candidates": 3697,
+      "fisher_bonf": {
+        "fold_pattern_tests": 6,
+        "unique_patterns": 6,
+        "patterns_in_multiple_folds": 0
+      },
+      "fisher_bh": {
+        "fold_pattern_tests": 217,
+        "unique_patterns": 217,
+        "patterns_in_multiple_folds": 0
+      },
+      "cmh_bonf": {
+        "fold_pattern_tests": 71,
+        "unique_patterns": 71,
+        "patterns_in_multiple_folds": 0
+      },
+      "cmh_bh": {
+        "fold_pattern_tests": 470,
+        "unique_patterns": 470,
+        "patterns_in_multiple_folds": 0
+      },
+      "both_bonf_directional": {
+        "fold_pattern_tests": 6,
+        "unique_patterns": 6,
+        "patterns_in_multiple_folds": 0
+      },
+      "both_bh_directional": {
+        "fold_pattern_tests": 176,
+        "unique_patterns": 176,
+        "patterns_in_multiple_folds": 0
+      },
+      "cluster_bonf": {
+        "fold_pattern_tests": 12,
+        "unique_patterns": 12,
+        "patterns_in_multiple_folds": 0
+      },
+      "surviving_cluster_bonf": {
+        "fold_pattern_tests": 1,
+        "unique_patterns": 1,
+        "patterns_in_multiple_folds": 0
+      }
+    },
+    "5": {
+      "tests": 3579,
+      "unique_candidates": 3579,
+      "fisher_bonf": {
+        "fold_pattern_tests": 47,
+        "unique_patterns": 47,
+        "patterns_in_multiple_folds": 0
+      },
+      "fisher_bh": {
+        "fold_pattern_tests": 532,
+        "unique_patterns": 532,
+        "patterns_in_multiple_folds": 0
+      },
+      "cmh_bonf": {
+        "fold_pattern_tests": 12,
+        "unique_patterns": 12,
+        "patterns_in_multiple_folds": 0
+      },
+      "cmh_bh": {
+        "fold_pattern_tests": 442,
+        "unique_patterns": 442,
+        "patterns_in_multiple_folds": 0
+      },
+      "both_bonf_directional": {
+        "fold_pattern_tests": 4,
+        "unique_patterns": 4,
+        "patterns_in_multiple_folds": 0
+      },
+      "both_bh_directional": {
+        "fold_pattern_tests": 283,
+        "unique_patterns": 283,
+        "patterns_in_multiple_folds": 0
+      },
+      "cluster_bonf": {
+        "fold_pattern_tests": 16,
+        "unique_patterns": 16,
+        "patterns_in_multiple_folds": 0
+      },
+      "surviving_cluster_bonf": {
+        "fold_pattern_tests": 1,
+        "unique_patterns": 1,
+        "patterns_in_multiple_folds": 0
+      }
+    }
+  }
+}
